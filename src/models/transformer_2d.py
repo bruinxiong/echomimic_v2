@@ -1,10 +1,11 @@
+
 # Adapted from https://github.com/huggingface/diffusers/blob/main/src/diffusers/models/transformer_2d.py
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
 import torch
 from diffusers.configuration_utils import ConfigMixin, register_to_config
-from diffusers.models.embeddings import CaptionProjection
+from diffusers.models.embeddings import PixArtAlphaTextProjection as CaptionProjection
 from diffusers.models.lora import LoRACompatibleConv, LoRACompatibleLinear
 from diffusers.models.modeling_utils import ModelMixin
 from diffusers.models.normalization import AdaLayerNormSingle

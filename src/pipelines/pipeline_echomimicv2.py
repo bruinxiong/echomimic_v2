@@ -242,13 +242,14 @@ class EchoMimicV2Pipeline(DiffusionPipeline):
         )
 
         latents = latents_seg
-        print('ori:',latents_seg.min(), latents_seg.max())
+        
         latents = torch.clamp(latents_seg, -1.5, 1.5)
 
 
         # scale the initial noise by the standard deviation required by the scheduler
         latents = latents * self.scheduler.init_noise_sigma
         print(f"latents shape:{latents.shape}, video_length:{video_length}")
+        
         return latents
 
     def _encode_prompt(
@@ -485,7 +486,7 @@ class EchoMimicV2Pipeline(DiffusionPipeline):
             context_frames
         )
         
-        pose_enocder_tensor = self.pose_enocder(poses_tensor)
+        pose_enocder_tensor = self.pose_encoder(poses_tensor)
         
         extra_step_kwargs = self.prepare_extra_step_kwargs(generator, eta)
 

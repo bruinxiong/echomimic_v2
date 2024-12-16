@@ -16,10 +16,14 @@ Terminal Technology Department, Alipay, Ant Group.
     <a href='https://antgroup.github.io/ai/echomimic_v2/'><img src='https://img.shields.io/badge/Project-Page-blue'></a>
     <a href='https://huggingface.co/BadToBest/EchoMimicV2'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Model-yellow'></a>
     <!--<a href='https://antgroup.github.io/ai/echomimic_v2/'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Demo-yellow'></a>-->
-    <a href='https://huggingface.co/BadToBest/EchoMimicV2'><img src='https://img.shields.io/badge/ModelScope-Model-purple'></a>
+    <a href='https://modelscope.cn/models/BadToBest/EchoMimicV2'><img src='https://img.shields.io/badge/ModelScope-Model-purple'></a>
     <!--<a href='https://antgroup.github.io/ai/echomimic_v2/'><img src='https://img.shields.io/badge/ModelScope-Demo-purple'></a>-->
     <a href='https://arxiv.org/abs/2411.10061'><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
     <a href='https://github.com/antgroup/echomimic_v2/blob/main/assets/halfbody_demo/wechat_group.png'><img src='https://badges.aleen42.com/src/wechat.svg'></a>
+</div>
+<div align='center'>
+    <a href='https://github.com/antgroup/echomimic_v2/discussions/53'><img src='https://img.shields.io/badge/English-Common Problems-orange'></a>
+    <a href='https://github.com/antgroup/echomimic_v2/discussions/40'><img src='https://img.shields.io/badge/中文版-常见问题汇总-orange'></a>
 </div>
 
 ## &#x1F680; EchoMimic Series
@@ -27,8 +31,11 @@ Terminal Technology Department, Alipay, Ant Group.
 * EchoMimicV2: Towards Striking, Simplified, and Semi-Body Human Animation. [GitHub](https://github.com/antgroup/echomimic_v2)
 
 ## &#x1F4E3; Updates
-* [2024.11.19] 🔥 We release the EMTD dataset list and processing scripts.
-* [2024.11.19] 🔥 We release our [EchoMimicV2](https://github.com/antgroup/echomimic_v2) codes and models.
+* [2024.12.16] 🔥 [RefImg-Pose Alignment Demo](https://github.com/antgroup/echomimic_v2/blob/main/demo.ipynb) is now available, which involves aligning reference image, extracting pose from driving video, and generating video.
+* [2024.11.27] 🔥 [Installation tutorial](https://www.youtube.com/watch?v=2ab6U1-nVTQ) is now available. Thanks [AiMotionStudio](https://www.youtube.com/@AiMotionStudio) for the contribution.
+* [2024.11.22] 🔥 [GradioUI](https://github.com/antgroup/echomimic_v2/blob/main/app.py) is now available. Thanks @gluttony-10 for the contribution.
+* [2024.11.21] 🔥 We release the EMTD dataset list and processing scripts.
+* [2024.11.21] 🔥 We release our [EchoMimicV2](https://github.com/antgroup/echomimic_v2) codes and models.
 * [2024.11.15] 🔥 Our [paper](https://arxiv.org/abs/2411.10061) is in public on arxiv.
 
 ## &#x1F305; Gallery
@@ -125,14 +132,26 @@ Terminal Technology Department, Alipay, Ant Group.
 </tr>
 </table>
 
-## ⚒️ Installation
+## ⚒️ Automatic Installation
 ### Download the Codes
 
 ```bash
   git clone https://github.com/antgroup/echomimic_v2
   cd echomimic_v2
 ```
+### Automatic Setup
+- CUDA >= 11.7, Python == 3.10
 
+```bash
+   sh linux_setup.sh
+```
+## ⚒️ Manual Installation
+### Download the Codes
+
+```bash
+  git clone https://github.com/antgroup/echomimic_v2
+  cd echomimic_v2
+```
 ### Python Environment Setup
 
 - Tested System Environment: Centos 7.2/Ubuntu 22.04, Cuda >= 11.7
@@ -142,13 +161,17 @@ Terminal Technology Department, Alipay, Ant Group.
 Create conda environment (Recommended):
 
 ```bash
-  conda create -n echomimic python=3.8
+  conda create -n echomimic python=3.10
   conda activate echomimic
 ```
 
 Install packages with `pip`
 ```bash
+  pip install pip -U
+  pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 xformers==0.0.28.post3 --index-url https://download.pytorch.org/whl/cu124
+  pip install torchao --index-url https://download.pytorch.org/whl/nightly/cu124
   pip install -r requirements.txt
+  pip install --no-deps facenet_pytorch==2.6.0
 ```
 
 ### Download ffmpeg-static
@@ -177,7 +200,7 @@ The **pretrained_weights** is organized as follows.
 ├── sd-image-variations-diffusers
 │   └── ...
 └── audio_processor
-    └── whisper_tiny.pt
+    └── tiny.pt
 ```
 
 In which **denoising_unet.pth** / **reference_unet.pth** / **motion_module.pth** / **pose_encoder.pth** are the main checkpoints of **EchoMimic**. Other models in this hub can be also downloaded from it's original hub, thanks to their brilliant works:
@@ -186,6 +209,10 @@ In which **denoising_unet.pth** / **reference_unet.pth** / **motion_module.pth**
 - [audio_processor(whisper)](https://openaipublic.azureedge.net/main/whisper/models/65147644a518d12f04e32d6f3b26facc3f8dd46e5390956a9424a650c0ce22b9/tiny.pt)
 
 ### Inference on Demo 
+Run the gradio:
+```bash
+python app.py
+```
 Run the python inference script:
 ```bash
 python infer.py --config='./configs/prompts/infer.yaml'
@@ -213,6 +240,7 @@ python ./EMTD_dataset/preprocess.py
 |    ✅    | Pretrained models trained on English and Mandarin Chinese on HuggingFace | 21st Nov, 2024 |
 |    ✅    | Pretrained models trained on English and Mandarin Chinese on ModelScope   | 21st Nov, 2024 |
 |    ✅    | EMTD dataset list and processing scripts                | 21st Nov, 2024 |
+|    ✅    | Jupyter demo with pose and reference image alignmnet                | 16st Dec, 2024 |
 |    🚀    | Accelerated models to be released                                        | TBD |
 |    🚀    | Online Demo on ModelScope to be released            | TBD |
 |    🚀    | Online Demo on HuggingFace to be released         | TBD |
